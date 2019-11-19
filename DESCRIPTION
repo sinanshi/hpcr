@@ -1,0 +1,11 @@
+Package: hpcr
+Type: Package
+Title: Job submission script for HPC platform
+Version: 0.1
+Author: Sinan Shi 
+Maintainer: Sinan Shi <sinan.shi@stats.ox.ac.uk>
+Description: Job submission
+Imports: data.table, stringr, pander, ggplot2, yaml, methods, whisker
+LinkingTo: Rcpp
+RoxygenNote: 6.1.1
+Suggests: testthat
