@@ -1,0 +1,22 @@
+#!/bin/bash
+#----------------------------------------------------
+# Example SLURM job script to run openmp applications 
+# on MSU's system.
+#----------------------------------------------------
+#SBATCH -J {{job_name}} # Job name
+#SBATCH -o {{log_path}}/{{job_name}}.o%j # Name of stdout output file(%j expands to jobId) 
+#SBATCH -e {{log_path}}/{{job_name}}.e%j # Name of stderr output file(%j expands to jobId)
+#SBATCH -p defq # Serial queue for serial and OpenMP jobs
+#SBATCH -N {{nnodes}} # Total number of nodes requested (16 cores/node)
+#SBATCH -n {{nproc}} # Total number of mpi tasks requested
+#SBATCH -t {{timelim}} # Run time (hh:mm:ss) - 1.5 hours
+# The next line is required if the user has more than one project
+# #SBATCH -A A-yourproject # <-- Allocation name to charge job against
+
+# This example will run an OpenMP application using 16 threads
+
+# Set the number of threads per task(Default=1)
+# export OMP_NUM_THREADS=8
+
+# Run the OpenMP application
+{{cmd}}
