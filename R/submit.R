@@ -55,10 +55,13 @@ slurm_job <- function(script, job_name, log_path=".",
 }
 
 #' @export
-submit_slurm <- function(scirpt, param, job_name, log_path, 
+submit_slurm <- function(scirpt, param=NULL, job_name, log_path, 
                          nnodes=1, nproc=1, timelim="48:00:00", 
                          verbose=FALSE) {
-  for (i in seq(param)) {
+  if (is.null(param))
+    param <- data.table(dummy="")
+
+  for (i in seq(nrow(param))) {
     p <- as.list(param[i, ])
     s <- whisker.render(script, p)
     slurm_job(s, job_name, log_path, nnodes,
