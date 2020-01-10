@@ -4,8 +4,15 @@
 \alias{create_script}
 \title{Create script from template}
 \usage{
-create_script(cmd, job_name, log_path, nnodes = 1, nproc = 1,
-  timelim = "480:00:00", template = "slurm")
+create_script(
+  cmd,
+  job_name,
+  log_path,
+  nnodes = 1,
+  nproc = 1,
+  timelim = "480:00:00",
+  template = "slurm"
+)
 }
 \description{
 Create script from template
