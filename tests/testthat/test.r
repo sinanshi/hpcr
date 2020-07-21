@@ -12,7 +12,8 @@ test_that("", {
 #    system("rm ../*.e*")
 #    system("rm ../*.o*")
     script <- "echo {{text}}"
-    expect_equal(submit_bash(script, list(text="xx")), "xx")
+#    expect_equal(submit_bash(script, list(text="xx")), "xx")
+    bash_multithread(script, data.table(text=seq(2), text2=1), verbose=T)
 })
 
 

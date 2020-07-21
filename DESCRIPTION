@@ -5,7 +5,7 @@ Version: 0.1
 Author: Sinan Shi 
 Maintainer: Sinan Shi <sinan.shi@stats.ox.ac.uk>
 Description: Job submission
-Imports: data.table, stringr, pander, ggplot2, yaml, methods, whisker
+Imports: data.table, stringr, pander, ggplot2, yaml, methods, whisker, parallel
 LinkingTo: Rcpp
-RoxygenNote: 7.0.2
+RoxygenNote: 7.1.0
 Suggests: testthat

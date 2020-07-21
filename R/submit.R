@@ -3,6 +3,7 @@
 #' @import stringr
 #' @import whisker
 #' @import yaml
+#' @import parallel
 NULL
 
 
@@ -69,17 +70,36 @@ submit_slurm <- function(scirpt, param=NULL, job_name, log_path,
     }
 }
 
+#' @param script bash script text
+#' @param param data.frame or data.table
 #' @export
-submit_bash <- function(script, param=NULL, verbose=FALSE) {
-    script <- whisker.render(script, param)
-
-    file <- tempfile()
-    writeLines(script, file)
-    if (verbose) {
-        f <- readLines(file)
-        cat(f, sep="\n")
+bash_multithread <- function(script, param, verbose=FALSE, cores=15, ...) {
+    p <- list()
+    for (i in seq(nrow(param))) {
+        p[[i]] <- param[i]
     }
+    result <- mclapply(p, function(x) {
+                           s <- whisker.render(script, x)
+                           if (verbose) cat(s)
+                           system(s)
+                  }, mc.cores=cores)
+}
 
-    res <- system2("bash", file, stdout=T)
-    return(res)
+#' @export
+submit_bash <- function(script, param=NULL, verbose=FALSE, wait=TRUE, ...) {
+    if (is.null(param))
+        param <- data.table(dummy="")
+
+    for (i in seq(nrow(param))) {
+        s <- whisker.render(script, as.list(param[i, ]))
+
+        file <- tempfile()
+        writeLines(s, file)
+        if (verbose) {
+            f <- readLines(file)
+            cat(f, sep="\n")
+        }
+        res <- system2("bash", file, wait=wait, ...)
+        Sys.sleep(1)
+    }
 }
